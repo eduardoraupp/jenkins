@@ -39,10 +39,10 @@ pipeline {
 		}
 		stage("build children projects") {
 			steps {
-				if(dependency1) {
+				if(${params.dependency1}) {
 					build job: 'dependency1', propagate: true
 				}
-				if(dependency2) {
+				if(${params.dependency2}) {
 					build job: 'dependency2', propagate: true
 				}
 			}
