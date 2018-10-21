@@ -34,13 +34,13 @@ pipeline {
     stages {
         stage("Build Parent project") {
             steps {
-                build job: 'independent', propagate: true
+               // build job: 'independent', propagate: true
             }
         }
         stage("build child 1") {
             when {
                 expression {
-                    return ${params.dependency1};
+                    return '${params.dependency1}';
                 }
             }
             steps {
@@ -50,7 +50,7 @@ pipeline {
         stage("build child 2") {
             when {
                 expression {
-                    return ${params.dependency2};
+                    return '${params.dependency2}';
                 }
             }
             steps {
