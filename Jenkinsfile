@@ -40,7 +40,7 @@ pipeline {
         stage("build child 1") {
             when {
                 expression {
-                    return '${params.dependency1}';
+                    return '${params.dependency1}'.toBoolean();
                 }
             }
             steps {
@@ -50,7 +50,7 @@ pipeline {
         stage("build child 2") {
             when {
                 expression {
-                    return '${params.dependency2}';
+                    return '${params.dependency2}'.toBoolean();
                 }
             }
             steps {
