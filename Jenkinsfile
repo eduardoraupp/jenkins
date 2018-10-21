@@ -32,9 +32,19 @@ pipeline {
 		string(defaultValue: 'X.X.X', description: 'dependency2NextVersion', name: 'dependency2NextVersion')
 	}
 	stages {
-		stage("Build another job") {
+		stage("Build Parent project") {
 			steps {
-				build job: 'dependency1', propagate: true
+				build job: 'independent', propagate: true
+			}
+		}
+		stage("build children projects") {
+			steps {
+				if(dependency1) {
+					build job: 'dependency1', propagate: true
+				}
+				if(dependency2) {
+					build job: 'dependency2', propagate: true
+				}
 			}
 		}
 	}
