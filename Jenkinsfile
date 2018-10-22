@@ -54,7 +54,7 @@ pipeline {
                 }
             }
             steps {
-                    build job: 'dependency2', propagate: true
+                    build job: 'dependency2', propagate: true, parameters: [[$class: 'StringParameterValue', name: 'dependency2CurrentVersion', value: params.dependency2CurrentVersion], [$class: 'StringParameterValue', name: 'dependency2NextVersion', value: params.dependency2NextVersion]]
             }
         }
     }
