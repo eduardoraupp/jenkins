@@ -24,7 +24,7 @@ def getGAVFromPom() {
 pipeline {
     agent any
     parameters {
-            booleanParam(defaultValue: false, description: 'dependency1', name: 'dependency1')
+        booleanParam(defaultValue: false, description: 'dependency1', name: 'dependency1')
         booleanParam(defaultValue: false, description: 'dependency2', name: 'dependency2')
         string(defaultValue: 'X.X.X', description: 'dependency1CurrentVersion', name: 'dependency1CurrentVersion')
         string(defaultValue: 'X.X.X', description: 'dependency2CurrentVersion', name: 'dependency2CurrentVersion')
@@ -44,7 +44,7 @@ pipeline {
                 }
             }
             steps {
-                    build job: 'dependency1', propagate: true
+                    build job: 'dependency1', propagate: true, parameters: [[$class: 'StringParameterValue', name: 'dependency1CurrentVersion', value: dependency1CurrentVersion], [$class: 'StringParameterValue', name: 'dependency1NextVersion', value: dependency1NextVersion]]
             }
         }
         stage("build child 2") {
