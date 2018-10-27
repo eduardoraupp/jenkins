@@ -35,7 +35,7 @@ pipeline {
     stages {
        // stage("Build Parent project") {
             //steps {
-               // build job: 'independent', propagate: true
+               build job: 'independent', propagate: true
          //   }
        // }
         stage("build child 1") {
