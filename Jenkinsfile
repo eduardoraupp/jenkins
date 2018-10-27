@@ -45,7 +45,7 @@ pipeline {
                 }
             }
             steps {
-                    build job: 'dependency1', propagate: true, parameters: [[$class: 'StringParameterValue', name: 'dependency1CurrentVersion', value: params.dependency1CurrentVersion], [$class: 'StringParameterValue', name: 'dependency1NextVersion', value: params.dependency1NextVersion]]
+                    build job: 'dependency1', propagate: true, parameters: [[$class: 'StringParameterValue', name: 'dependency1CurrentVersion', value: params.dependency1CurrentVersion], [$class: 'StringParameterValue', name: 'dependency1NextVersion', value: params.dependency1NextVersion], [$class: 'BooleanParameterValue', name: 'isRelease', value: params.isRelease]]
             }
         }
         stage("build child 2") {
