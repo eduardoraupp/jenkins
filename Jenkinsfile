@@ -24,6 +24,7 @@ def getGAVFromPom() {
 pipeline {
     agent any
     parameters {
+	booleanParam(defaultValue: false, description: 'isRelease', name: 'isRelease')
         booleanParam(defaultValue: false, description: 'dependency1', name: 'dependency1')
         booleanParam(defaultValue: false, description: 'dependency2', name: 'dependency2')
         string(defaultValue: 'X.X.X', description: 'dependency1CurrentVersion', name: 'dependency1CurrentVersion')
