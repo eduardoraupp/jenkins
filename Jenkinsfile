@@ -30,8 +30,8 @@ pipeline {
         booleanParam(defaultValue: false, description: 'Release dependency 2', name: 'dependency2')
         string(defaultValue: 'X.X.X', description: 'Parent dependency version', name: 'parentDependencyVersion')
         //string(defaultValue: 'X.X.X', description: 'dependency2CurrentVersion', name: 'dependency2CurrentVersion')
-        //string(defaultValue: 'X.X.X', description: 'dependency1NextVersion', name: 'dependency1NextVersion')
-        //string(defaultValue: 'X.X.X', description: 'dependency2NextVersion', name: 'dependency2NextVersion')
+        string(defaultValue: 'X.X.X', description: 'dependency1NextVersion', name: 'dependency1NextVersion')
+        string(defaultValue: 'X.X.X', description: 'dependency2NextVersion', name: 'dependency2NextVersion')
     }
     stages {
         stage("Build Parent project") {
