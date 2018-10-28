@@ -24,18 +24,19 @@ def getGAVFromPom() {
 pipeline {
     agent any
     parameters {
-	booleanParam(defaultValue: false, description: 'isRelease', name: 'isRelease')
-        booleanParam(defaultValue: false, description: 'dependency1', name: 'dependency1')
-        booleanParam(defaultValue: false, description: 'dependency2', name: 'dependency2')
-        string(defaultValue: 'X.X.X', description: 'dependency1CurrentVersion', name: 'dependency1CurrentVersion')
-        string(defaultValue: 'X.X.X', description: 'dependency2CurrentVersion', name: 'dependency2CurrentVersion')
-        string(defaultValue: 'X.X.X', description: 'dependency1NextVersion', name: 'dependency1NextVersion')
-        string(defaultValue: 'X.X.X', description: 'dependency2NextVersion', name: 'dependency2NextVersion')
+	booleanParam(defaultValue: false, description: 'is parent release?', name: 'isParentRelease')
+	//booleanParam(defaultValue: false, description: 'is child release?', name: 'isChildRelease')
+        booleanParam(defaultValue: false, description: 'Release dependency 1', name: 'dependency1')
+        booleanParam(defaultValue: false, description: 'Release dependency 2', name: 'dependency2')
+        string(defaultValue: 'X.X.X', description: 'Parent dependency version', name: 'parentDependencyVersion')
+        //string(defaultValue: 'X.X.X', description: 'dependency2CurrentVersion', name: 'dependency2CurrentVersion')
+        //string(defaultValue: 'X.X.X', description: 'dependency1NextVersion', name: 'dependency1NextVersion')
+        //string(defaultValue: 'X.X.X', description: 'dependency2NextVersion', name: 'dependency2NextVersion')
     }
     stages {
         stage("Build Parent project") {
             steps {
-               build job: 'independent', propagate: true, parameters: [[$class: 'BooleanParameterValue', name: 'isRelease', value: params.isRelease]]
+               build job: 'independent', propagate: true, parameters: [[$class: 'BooleanParameterValue', name: 'isParentRelease', value: params.isParentRelease]]
             }
         }
         stage("build child 1") {
@@ -45,7 +46,7 @@ pipeline {
                 }
             }
             steps {
-                    build job: 'dependency1', propagate: true, parameters: [[$class: 'StringParameterValue', name: 'dependency1CurrentVersion', value: params.dependency1CurrentVersion], [$class: 'StringParameterValue', name: 'dependency1NextVersion', value: params.dependency1NextVersion], [$class: 'BooleanParameterValue', name: 'isRelease', value: params.isRelease]]
+                    build job: 'dependency1', propagate: true, parameters: [[$class: 'StringParameterValue', name: 'parentDependencyVersion', value: params.parentDependencyVersion], [$class: 'BooleanParameterValue', name: 'isParentRelease', value: params.isParentRelease]]
             }
         }
         stage("build child 2") {
@@ -55,7 +56,7 @@ pipeline {
                 }
             }
             steps {
-                    build job: 'dependency2', propagate: true, parameters: [[$class: 'StringParameterValue', name: 'dependency2CurrentVersion', value: params.dependency2CurrentVersion], [$class: 'StringParameterValue', name: 'dependency2NextVersion', value: params.dependency2NextVersion]]
+                    build job: 'dependency2', propagate: true, parameters: [[$class: 'StringParameterValue', name: 'parentDependencyVersion', value: params.parentDependencyVersion], [$class: 'BooleanParameterValue', name: 'isParentRelease', value: params.isParentRelease]]
             }
         }
     }
